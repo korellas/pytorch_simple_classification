@@ -1,0 +1,9 @@
+output_dir: './result/catdog/r1'
+model:
+  weights: None
+  batch_size: 4
+  learning_rate: 0.001
+  device: 'cpu'
+
+
+  
