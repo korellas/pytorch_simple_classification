@@ -2,6 +2,7 @@ data/
 .vscode/
 .DS_Store
 *.zip
+*.pth
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
