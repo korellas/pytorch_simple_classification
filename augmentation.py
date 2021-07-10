@@ -204,8 +204,8 @@ class Patch():
     @blur.setter
     def blur(self, x):
         assert isinstance(x, int)
-        assert x % 2 == 1
-        assert x > 0
+        assert (x % 2 == 1) or (x == 0)
+        assert x >= 0
         self._blur = x
 
     @property
@@ -247,10 +247,11 @@ class Patch():
         mask = (np.zeros((self.org_shape[:2])) * 255.).astype(np.uint8)
         px, py = self.pad
         mask[py:mask.shape[0] - py, px:mask.shape[1] - px] = 255
-        mask_blurred = cv2.GaussianBlur(mask, (self.blur, self.blur), 0)
-        mask_res = cv2.cvtColor(mask_blurred, cv2.COLOR_GRAY2BGR)
-        mask_res = self.imaug(mask_res)
-        return mask_res.astype(float) / 255.
+        if self.blur != 0:
+            mask = cv2.GaussianBlur(mask, (self.blur, self.blur), 0)
+        mask = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+        mask = self.imaug(mask)
+        return mask.astype(float) / 255.
 
     @property
     def image(self):
